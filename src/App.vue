@@ -1,17 +1,48 @@
 <template>
-  <img alt="John's logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to My Blog"/>
+  <HelloWorld msg="thoughts, programming, collections" />
+
+  <div :price="price">
+    {{ price }}
+  </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script setup>
+import { onMounted, ref } from "vue";
+import dayjs from "dayjs";
+import HelloWorld from "./components/HelloWorld.vue";
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
+const price = ref();
+
+const isWeekend = (date) => {
+  if (date.getDay() === 0 || date.getDay() === 6) {
+    return true;
+  } else {
+    return false;
   }
-}
+};
+
+onMounted(() => {
+  const hour = dayjs().hour();
+  if (hour < 9 || hour > 15) {
+    return;
+  }
+  const today = new Date();
+  if (isWeekend(today)) {
+    return;
+  }
+
+  const task = setInterval(
+    () =>
+      fetch("https://push2.eastmoney.com/api/qt/ulist.np/get?secids=0.002127")
+        .then((res) => res.json())
+        .then((data) => {
+          price.value = data.data.diff[0].f2;
+        }),
+    3000
+  );
+
+  setTimeout(() => clearInterval(task), 1000 * 60 * 60);
+});
 </script>
 
 <style>
