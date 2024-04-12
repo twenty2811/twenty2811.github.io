@@ -4,12 +4,19 @@
   <div :price="price">
     {{ price }}
   </div>
+
+  <div>
+    <q-r-code-gen></q-r-code-gen>
+  </div>
+  
+
 </template>
 
 <script setup>
 import { onMounted, ref } from "vue";
 import dayjs from "dayjs";
 import HelloWorld from "./components/HelloWorld.vue";
+import QRCodeGen from "./components/QRCodeGen.vue";
 
 const price = ref();
 
