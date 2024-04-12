@@ -9,6 +9,9 @@
     <q-r-code-gen></q-r-code-gen>
   </div>
   
+  <div>
+    <password-gen></password-gen>
+  </div>
 
 </template>
 
@@ -17,6 +20,7 @@ import { onMounted, ref } from "vue";
 import dayjs from "dayjs";
 import HelloWorld from "./components/HelloWorld.vue";
 import QRCodeGen from "./components/QRCodeGen.vue";
+import PasswordGen from "./components/PasswordGen.vue";
 
 const price = ref();
 
@@ -30,7 +34,7 @@ const isWeekend = (date) => {
 
 onMounted(() => {
   const hour = dayjs().hour();
-  if (hour < 9 || hour > 15) {
+  if (hour < 9 || hour > 14) {
     return;
   }
   const today = new Date();
