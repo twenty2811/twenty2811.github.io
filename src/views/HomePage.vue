@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <h1>thoughts, programming, collections</h1>
     <h3>Most visited sites</h3>
     <ul>
       <li>
@@ -15,13 +15,9 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "HelloWorld",
-  props: {
-    msg: String,
-  },
-};
+<script setup>
+
+
 </script>
 
 <style scoped>
