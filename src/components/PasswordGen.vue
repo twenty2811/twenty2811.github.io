@@ -74,6 +74,12 @@ passwords = generator.generateMultiple(3, {
   cursor: pointer;
 }
 
+.password-title {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  cursor: pointer;
+}
+
 .hint {
   margin-top: 10px;
   font-size: 0.8rem;

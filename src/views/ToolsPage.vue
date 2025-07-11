@@ -1,17 +1,35 @@
 <template>
   <div class="page-layout">
     <main class="page-content">
-      <div :price="price">
-        {{ price }}
+      <div>
+        <div class="price-display">{{ price }}</div>
       </div>
 
-      <div>
-        <q-r-code-gen></q-r-code-gen>
-      </div>
+      <section class="tool-block">
+        <h2 class="tool-title">QR Code Generator</h2>
+        <div class="tool-body">
+          <q-r-code-gen />
+        </div>
+      </section>
 
-      <div>
-        <password-gen></password-gen>
-      </div>
+      <section class="tool-block">
+        <h2 class="tool-title">Password Generator</h2>
+        <div class="tool-body">
+          <password-gen />
+        </div>
+      </section>
+
+      <section class="tool-block">
+        <div class="tool-body">
+          <unix-timestamp-tool />
+        </div>
+      </section>
+
+      <section class="tool-block">
+        <div class="tool-body">
+          <json-formatter-tool />
+        </div>
+      </section>
     </main>
   </div>
 </template>
@@ -21,6 +39,8 @@ import { onMounted, ref } from "vue";
 import dayjs from "dayjs";
 import QRCodeGen from "@/components/QRCodeGen.vue";
 import PasswordGen from "@/components/PasswordGen.vue";
+import UnixTimestampTool from "@/components/UnixTimestampTool.vue";
+import JsonFormatterTool from "@/components/JsonFormatterTool.vue";
 
 const price = ref();
 
@@ -91,5 +111,31 @@ onMounted(() => {
   background: var(--card);
   box-shadow: 0 3px 10px var(--shadow);
   border-radius: 8px;
+}
+
+.tool-block {
+  background: var(--card, rgba(255, 255, 255, 0.6));
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(120, 120, 120, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.tool-block:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.05);
+}
+
+.tool-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  padding-left: 0.75rem;
+}
+
+.tool-body {
+  font-size: 1rem;
 }
 </style>
