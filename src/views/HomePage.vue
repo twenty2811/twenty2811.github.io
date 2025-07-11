@@ -3,9 +3,14 @@
     <h1>Thoughts, Programming, Collections</h1>
     <h3>Most Visited Sites</h3>
     <ul class="site-list">
-      <li v-for="site in sites" :key="site.name">
+      <li v-for="(site, index) in sites" :key="site.name">
         <a :href="site.url" target="_blank" rel="noopener">
-          <img :src="site.favicon" :alt="site.name + ' logo'" class="favicon" />
+          <img
+            v-if="iconVisible[index]"
+            :src="site.favicon"
+            :alt="site.name + ' logo'"
+            class="favicon"
+          />
           {{ site.name }}
         </a>
       </li>
@@ -14,6 +19,8 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue";
+
 const sites = [
   {
     name: "Google",
@@ -38,7 +45,8 @@ const sites = [
   {
     name: "Reddit",
     url: "https://www.reddit.com",
-    favicon: "https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png",
+    favicon:
+      "https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png",
   },
   {
     name: "Wikipedia",
@@ -49,12 +57,42 @@ const sites = [
     name: "Stack Overflow",
     url: "https://stackoverflow.com",
     favicon: "https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico",
-  }
+  },
 ];
+
+const iconVisible = ref(new Array(sites.length).fill(false))
+
+// Track which icons are visible
+async function checkFavicon(url, timeoutMs = 300) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const res = await fetch(url, {
+      method: 'HEAD',
+      signal: controller.signal,
+      mode: 'no-cors', // may still fail but avoids CORS errors
+    });
+    clearTimeout(timeout);
+    return res.ok || res.status === 0; // status 0 if no-cors
+  } catch (err) {
+    return false;
+  }
+}
+
+onMounted(async () => {
+  await Promise.all(
+    sites.map(async (site, index) => {
+      const ok = await checkFavicon(site.favicon, 300);
+      iconVisible.value[index] = ok;
+    })
+  );
+});
 </script>
 
 <style scoped>
-h1, h3 {
+h1,
+h3 {
   text-align: center;
   color: #222;
 }

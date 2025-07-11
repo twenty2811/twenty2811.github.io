@@ -1,7 +1,8 @@
 # Blog Project
 
-## Project deploy
+## Project build and publish
 ```
+yarn build
 git subtree push --prefix dist origin gh-pages
 ```
 
