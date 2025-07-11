@@ -16,8 +16,17 @@ module.exports = defineConfig({
   chainWebpack: config => {
     config
       .plugin('provide')
-      .use(webpack.ProvidePlugin, [{
-        process: 'process',
-      }]);
+      .use(webpack.ProvidePlugin, [
+        {
+          process: 'process',
+        },
+      ])
+
+    config.module
+      .rule('raw-md')
+      .test(/\.md$/)
+      .use('raw-loader')
+      .loader('raw-loader')
+      .end()
   },
 })

@@ -1,5 +1,5 @@
 {
-  "name": "John-Blog",
+  "name": "blog-of-john",
   "version": "0.1.1",
   "private": true,
   "scripts": {
@@ -12,6 +12,7 @@
     "crypto-browserify": "^3.12.0",
     "dayjs": "^1.11.10",
     "generate-password": "^1.7.1",
+    "marked": "^16.0.0",
     "prettier": "^3.2.5",
     "process": "^0.11.10",
     "qrcode": "^1.5.3",
@@ -28,7 +29,8 @@
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^8.0.3"
+    "eslint-plugin-vue": "^8.0.3",
+    "raw-loader": "^4.0.2"
   },
   "eslintConfig": {
     "root": true,

@@ -1,20 +1,28 @@
 <template>
-  <div>
-    <h1>Thoughts, Programming, Collections</h1>
-    <h3>Most Visited Sites</h3>
-    <ul class="site-list">
-      <li v-for="(site, index) in sites" :key="site.name">
-        <a :href="site.url" target="_blank" rel="noopener">
-          <img
-            v-if="iconVisible[index]"
-            :src="site.favicon"
-            :alt="site.name + ' logo'"
-            class="favicon"
-          />
-          {{ site.name }}
-        </a>
-      </li>
-    </ul>
+  <div class="page-layout">
+    <main class="page-content">
+      <section class="intro">
+        <h1 class="tagline">
+          <span class="dim">Thoughts,</span>
+          <span class="highlight"> Programming,</span>
+          <span class="dim"> Collections</span>
+        </h1>
+        <h3 class="section-title">Most Visited Sites</h3>
+      </section>
+      <ul class="site-list">
+        <li v-for="(site, index) in sites" :key="site.name">
+          <a :href="site.url" target="_blank" rel="noopener">
+            <img
+              v-if="iconVisible[index]"
+              :src="site.favicon"
+              :alt="site.name + ' logo'"
+              class="favicon"
+            />
+            {{ site.name }}
+          </a>
+        </li>
+      </ul>
+    </main>
   </div>
 </template>
 
@@ -60,7 +68,7 @@ const sites = [
   },
 ];
 
-const iconVisible = ref(new Array(sites.length).fill(false))
+const iconVisible = ref(new Array(sites.length).fill(false));
 
 // Track which icons are visible
 async function checkFavicon(url, timeoutMs = 300) {
@@ -69,9 +77,9 @@ async function checkFavicon(url, timeoutMs = 300) {
 
   try {
     const res = await fetch(url, {
-      method: 'HEAD',
+      method: "HEAD",
       signal: controller.signal,
-      mode: 'no-cors', // may still fail but avoids CORS errors
+      mode: "no-cors", // may still fail but avoids CORS errors
     });
     clearTimeout(timeout);
     return res.ok || res.status === 0; // status 0 if no-cors
@@ -95,6 +103,38 @@ h1,
 h3 {
   text-align: center;
   color: #222;
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 2em;
+}
+
+.tagline {
+  font-size: 2.5em;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+.tagline .highlight {
+  color: #0953f4;
+}
+
+.tagline .dim {
+  color: #666;
+}
+
+.section-title {
+  font-size: 1.5em;
+  color: #333;
+  margin-top: 2em;
+}
+
+.site-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5em;
+  margin-top: 2em;
 }
 
 .site-list {
@@ -131,5 +171,32 @@ h3 {
 .favicon {
   width: 20px;
   height: 20px;
+}
+
+.page-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2em;
+  font-family: system-ui, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  margin: 0 auto;
+}
+
+.page-content {
+  margin-top: 60px; /* Adjust if you have a fixed navbar height */
+  max-width: 800px; /* Limit the content width */
+  width: 100%; /* Full width inside max-width */
+  margin-left: auto; /* Center horizontally */
+  margin-right: auto; /* Center horizontally */
+  padding: 1.5rem 2rem; /* Add some padding */
+  box-sizing: border-box; /* Include padding in width */
+  text-align: center; /* Center text inside */
+  /* Optional: add shadow or border radius for style */
+  background: var(--card);
+  box-shadow: 0 3px 10px var(--shadow);
+  border-radius: 8px;
 }
 </style>
