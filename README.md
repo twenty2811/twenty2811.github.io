@@ -5,6 +5,12 @@
 git subtree push --prefix dist origin gh-pages
 ```
 
+## Development and Run
+
+```
+yarn install && yarn serve
+```
+
 ## Plan
 - router
 - components
